@@ -20,7 +20,7 @@ namespace UWPSoundBoard_Bob1.Model
             AudioFile = String.Format(
                 "/Assets/Audio/{0}/{1}.wav", category, name);
             ImageFile = String.Format(
-                "/Assets/Image/{0}/{1}.png", category, name);
+                "/Assets/Images/{0}/{1}.png", category, name);
             return;
         }
     }

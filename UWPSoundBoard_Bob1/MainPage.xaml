@@ -50,7 +50,21 @@
             <SplitView.Pane>
                 <ListView Name="MennuItems"
                           IsItemClickEnabled="True"
-                          ItemClick="ListViewBase_OnItemClick"/>
+                          ItemsSource="{x:Bind MenuItems}"
+                          ItemClick="ListViewBase_OnItemClick">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data:MenuItem">
+                        <StackPanel Orientation="Horizontal">
+                        <Image Source="{x:Bind IconFile}"
+                               Height="45"
+                               Width="45"/>
+                        <TextBlock Text="{x:Bind Category}" 
+                                   FontSize="18"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
+                    </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </SplitView.Pane>
             <SplitView.Content>
                 <Grid>

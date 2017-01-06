@@ -25,16 +25,24 @@ namespace UWPSoundBoard_Bob1
     public sealed partial class MainPage : Page
     {
         private ObservableCollection<Sound> Sounds;
+        private List<MenuItem> MenuItems;
+
         public MainPage()
         {
             this.InitializeComponent();
             Sounds = new ObservableCollection<Sound>();
             SoundManager.GetAllSounds(Sounds);
+
+            MenuItems = new List<MenuItem>();
+            MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/animals.png", Category = SoundCategory.Animals });
+            MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/cartoon.png", Category = SoundCategory.Cartoons });
+            MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/taunt.png", Category = SoundCategory.Taunts });
+            MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/warning.png", Category = SoundCategory.Warnings });
         }
 
         private void HamburgerButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
         private void BackButton_OnClick(object sender, RoutedEventArgs e)
