@@ -28,6 +28,7 @@ namespace UWPSoundBoard_Bob1
     public sealed partial class MainPage : Page
     {
         private ObservableCollection<Sound> Sounds;
+        private List<String> Suggestions;
         private List<MenuItem> MenuItems;
 
         public MainPage()
@@ -59,12 +60,17 @@ namespace UWPSoundBoard_Bob1
 
         private void SearchAutoSuggestBox_OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            throw new NotImplementedException();
+            SoundManager.GetAllSounds(Sounds);
+            Suggestions = Sounds.Where(p => p.Name.StartsWith(sender.Text)).Select(p=>p.Name).ToList();
+            SearchAutoSuggestBox.ItemsSource = Suggestions;
         }
 
         private void SearchAutoSuggestBox_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            
+            SoundManager.GetSoundsByName(Sounds, sender.Text);
+            CategoryTextBlock.Text = sender.Text;
+            MenuItemsListView.SelectedItem = null;
+            BackButton.Visibility = Visibility.Visible;
         }
 
         private void MenuItemsListView_ItemClick(object sender, ItemClickEventArgs e)
