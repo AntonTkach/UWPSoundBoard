@@ -38,6 +38,7 @@ namespace UWPSoundBoard_Bob1
             MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/cartoon.png", Category = SoundCategory.Cartoons });
             MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/taunt.png", Category = SoundCategory.Taunts });
             MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/warning.png", Category = SoundCategory.Warnings });
+            BackButton.Visibility = Visibility.Collapsed;
         }
 
         private void HamburgerButton_OnClick(object sender, RoutedEventArgs e)
@@ -47,7 +48,10 @@ namespace UWPSoundBoard_Bob1
 
         private void BackButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            SoundManager.GetAllSounds(Sounds);
+            CategoryTextBlock.Text = "All Sounds";
+            MenuItemsListView.SelectedItem = null;
+            BackButton.Visibility = Visibility.Collapsed;
         }
 
         private void SearchAutoSuggestBox_OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -57,17 +61,24 @@ namespace UWPSoundBoard_Bob1
 
         private void SearchAutoSuggestBox_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            throw new NotImplementedException();
+            
         }
 
-        private void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)
+        private void MenuItemsListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            throw new NotImplementedException();
+            var menuItem = (MenuItem)e.ClickedItem;
+
+            CategoryTextBlock.Text = menuItem.Category.ToString();
+            SoundManager.GetSoundsByCategory(Sounds, menuItem.Category);
+            BackButton.Visibility = Visibility.Visible;
         }
 
         private void SoundGridView_OnItemClick(object sender, ItemClickEventArgs e)
         {
-            throw new NotImplementedException();
+            var sound = (Sound)e.ClickedItem;
+            MyMediaElement.Source = new Uri(this.BaseUri, sound.AudioFile);
         }
+
+        
     }
 }
