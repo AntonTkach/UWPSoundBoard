@@ -52,17 +52,24 @@ namespace UWPSoundBoard_Bob1
 
         private void BackButton_OnClick(object sender, RoutedEventArgs e)
         {
-            SoundManager.GetAllSounds(Sounds);
-            CategoryTextBlock.Text = "All Sounds";
-            MenuItemsListView.SelectedItem = null;
-            BackButton.Visibility = Visibility.Collapsed;
+            goBack();
         }
 
         private void SearchAutoSuggestBox_OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
+            if (String.IsNullOrEmpty(sender.Text)) goBack();
+
             SoundManager.GetAllSounds(Sounds);
             Suggestions = Sounds.Where(p => p.Name.StartsWith(sender.Text)).Select(p=>p.Name).ToList();
             SearchAutoSuggestBox.ItemsSource = Suggestions;
+        }
+
+        private void goBack()
+        {
+            SoundManager.GetAllSounds(Sounds);
+            CategoryTextBlock.Text = "All Sounds";
+            MenuItemsListView.SelectedItem = null;
+            BackButton.Visibility = Visibility.Collapsed;
         }
 
         private void SearchAutoSuggestBox_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
